@@ -4,7 +4,13 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotnet.Encoding
 {
-    internal abstract class EncodedMcumgrCommand
+    internal class EncodedMcumgrCommand
     {
+        public readonly byte[] EncodedCommand;
+
+        public EncodedMcumgrCommand(byte[] encodedCommand)
+        {
+            EncodedCommand = encodedCommand;
+        }
     }
 }

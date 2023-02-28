@@ -1,4 +1,4 @@
-﻿using JanRoslan.McumgrDotnet;
+﻿using JanRoslan.McumgrDotnet.Commands;
 using JanRoslan.McumgrDotnet.Encoding;
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,12 @@ namespace JanRoslan.McumgrDotNet.Encoding
     internal interface IEncodingLayer
     {
 
-        public EncodedMcumgrCommand EncodeMcumgrCommand(McumgrCommand command)
-        {
-            return null;
-        }
+        public EncodedMcumgrCommand EncodeMcumgrCommand(McumgrCommand command);
 
-        public McumgrCommand DecodeMcumgrCommand(McumgrCommand command)
-        {
-            return null;
+        public McumgrCommand DecodeMcumgrCommand(EncodedMcumgrCommand command);
+
+        public static bool IsEncodedCommandValid(EncodedMcumgrCommand encCommand) {
+            throw new NotImplementedException();
         }
     }
 }
