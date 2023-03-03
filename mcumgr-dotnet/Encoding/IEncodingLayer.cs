@@ -13,8 +13,10 @@ namespace JanRoslan.McumgrDotNet.Encoding
 
         public McumgrCommand DecodeMcumgrCommand(EncodedMcumgrCommand command);
 
-        public static bool IsEncodedCommandValid(EncodedMcumgrCommand encCommand) {
-            throw new NotImplementedException();
+        public T DecodeMcumgrCommand<T>(EncodedMcumgrCommand command) where T : McumgrCommand;
+
+        public static bool IsEncodedCommandValid<T>(EncodedMcumgrCommand encCommand, McumgrCommand command) where T : McumgrCommand {
+            
         }
     }
 }

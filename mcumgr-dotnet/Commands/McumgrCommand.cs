@@ -7,22 +7,45 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotnet.Commands
 {
-    internal abstract class McumgrCommand
+    public abstract class McumgrCommand
     {
-        public byte GroupId { get; set; }
+        public static ushort GroupId;
 
-        public byte CommandId { get; set; }
+        public ushort group_Id;
 
         public byte[] Data { get; set; }
 
         public readonly Operation operation;
 
-        public McumgrCommand(byte groupId, byte commandId, byte[] data, Operation op)
+        public byte SequenceNum { get; set; }
+
+        public static byte CommandId;
+
+        public byte command_Id;
+
+        public McumgrCommand(Operation op, byte sequenceNum, byte[] data)
         {
-            GroupId = groupId;
-            CommandId = commandId;
+            group_Id = GroupId;
+            command_Id = CommandId;
+            Data = data;
+            SequenceNum = sequenceNum;
+            operation = op;
+        }
+
+        public McumgrCommand(Operation op, byte[] data)
+        {
+            group_Id = GroupId;
+            command_Id = CommandId;
             Data = data;
             operation = op;
+        }
+
+        public McumgrCommand()
+        {
+            group_Id = GroupId;
+            command_Id = CommandId;
+            Data = Array.Empty<byte>();
+            operation = Operation.None;
         }
     }
 }
