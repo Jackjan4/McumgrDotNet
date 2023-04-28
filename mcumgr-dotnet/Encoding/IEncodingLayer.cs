@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotNet.Encoding
 {
-    internal interface IEncodingLayer
+    public interface IEncodingLayer
     {
 
         public EncodedMcumgrCommand EncodeMcumgrCommand(McumgrCommand command);
@@ -15,8 +15,6 @@ namespace JanRoslan.McumgrDotNet.Encoding
 
         public T DecodeMcumgrCommand<T>(EncodedMcumgrCommand command) where T : McumgrCommand;
 
-        public static bool IsEncodedCommandValid<T>(EncodedMcumgrCommand encCommand, McumgrCommand command) where T : McumgrCommand {
-            
-        }
+        public bool IsEncodedCommandValid(EncodedMcumgrCommand encCommand, McumgrCommand command);
     }
 }

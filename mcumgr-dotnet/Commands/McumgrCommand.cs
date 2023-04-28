@@ -9,43 +9,51 @@ namespace JanRoslan.McumgrDotnet.Commands
 {
     public abstract class McumgrCommand
     {
-        public static ushort GroupId;
 
-        public ushort group_Id;
+        // According to SMP Protocol Spec Group ID is 16 bits https://docs.zephyrproject.org/3.2.0/services/device_mgmt/smp_protocol.html
+        public ushort GroupId;
 
-        public byte[] Data { get; set; }
+
+        // Data saved here is not encoded by e.g. CBOR
+        public byte[] UnencodedData { get; set; }
 
         public readonly Operation operation;
 
-        public byte SequenceNum { get; set; }
+        public byte? SequenceNum { get; set; }
 
-        public static byte CommandId;
 
-        public byte command_Id;
 
-        public McumgrCommand(Operation op, byte sequenceNum, byte[] data)
+        // According to SMP Protocol Spec Group ID is 8 bits https://docs.zephyrproject.org/3.2.0/services/device_mgmt/smp_protocol.html
+        public byte CommandId;
+
+
+        public McumgrCommand(ushort groupId, byte commandId, Operation op, byte sequenceNum, byte[] data)
         {
-            group_Id = GroupId;
-            command_Id = CommandId;
-            Data = data;
+            GroupId = groupId;
+            CommandId = commandId;
+            UnencodedData = data;
             SequenceNum = sequenceNum;
             operation = op;
         }
 
-        public McumgrCommand(Operation op, byte[] data)
+        public McumgrCommand(ushort groupId, byte commandId, Operation op, byte[] data)
         {
-            group_Id = GroupId;
-            command_Id = CommandId;
-            Data = data;
+            GroupId = groupId;
+            CommandId = commandId;
+            UnencodedData = data;
+            SequenceNum = null;
             operation = op;
         }
 
-        public McumgrCommand()
+        public McumgrCommand(ushort groupId, byte commandId)
         {
-            group_Id = GroupId;
-            command_Id = CommandId;
-            Data = Array.Empty<byte>();
+            GroupId = groupId;
+            CommandId = commandId;
+            SequenceNum = null;
+            UnencodedData = Array.Empty<byte>();
             operation = Operation.None;
         }
+
+        public abstract byte[] GetDataAsCbor();
     }
 }

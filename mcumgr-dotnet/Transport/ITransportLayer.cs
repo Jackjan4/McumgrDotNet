@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotNet.Transport
 {
-    internal interface ITransportLayer
+    public interface ITransportLayer
     {
 
         void SendPacket(McumgrPacket packet);

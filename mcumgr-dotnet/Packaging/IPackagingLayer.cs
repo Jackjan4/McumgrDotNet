@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotNet.Packaging
 {
-    internal interface IPacketLayer
+    public interface IPacketLayer
     {
 
         public McumgrPacket PackCommand(EncodedMcumgrCommand encodedCommand);

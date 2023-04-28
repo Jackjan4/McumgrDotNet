@@ -7,7 +7,7 @@ using JanRoslan.McumgrDotnet.Encoding;
 
 namespace JanRoslan.McumgrDotNet.Packaging
 {
-    internal class SerialPackager : IPacketLayer
+    public class SerialPackager : IPacketLayer
     {
         public SerialPackager()
         {
@@ -16,7 +16,8 @@ namespace JanRoslan.McumgrDotNet.Packaging
 
         public McumgrPacket PackCommand(EncodedMcumgrCommand encodedCommand)
         {
-            throw new NotImplementedException();
+
+            return null;
         }
 
         public EncodedMcumgrCommand UnpackCommand(McumgrPacket packet)

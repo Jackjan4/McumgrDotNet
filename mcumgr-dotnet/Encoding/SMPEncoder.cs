@@ -2,15 +2,16 @@
 using JanRoslan.McumgrDotnet.Encoding;
 using System;
 using System.Collections.Generic;
+using System.Formats.Cbor;
 using System.Text;
 using System.Xml.XPath;
 
 namespace JanRoslan.McumgrDotNet.Encoding
 {
-    internal class SMPEncoder : IEncodingLayer
+    public class SmpEncoder : IEncodingLayer
     {
 
-        public SMPEncoder() { 
+        public SmpEncoder() { 
         }
 
         public McumgrCommand DecodeMcumgrCommand(EncodedMcumgrCommand command)
@@ -29,8 +30,8 @@ namespace JanRoslan.McumgrDotNet.Encoding
                 Array.Copy(command.EncodedCommand, 8, b_data, 0, b_dataLength);
             }
 
-            McumgrCommand result = new McumgrCommand((Operation)b_operation, b_groupId, b_commandId, b_data);
-            return result;
+            //McumgrCommand result = new McumgrCommand(b_groupId, b_commandId, (Operation)b_operation, b_data);
+            return null;//result;
         }
 
         public T DecodeMcumgrCommand<T>(EncodedMcumgrCommand command) where T : McumgrCommand
@@ -41,22 +42,30 @@ namespace JanRoslan.McumgrDotNet.Encoding
 
         public EncodedMcumgrCommand EncodeMcumgrCommand(McumgrCommand command)
         {
-            byte[] resultBytes = new byte[8 + command.Data.Length];
+            byte[] cborData = command.GetDataAsCbor();
+
+            byte[] resultBytes = new byte[8 + cborData.Length];
 
             resultBytes[0] = (byte)command.operation; // Op code
             resultBytes[1] = 0; // Flags; Not used by Zephyr
-            resultBytes[2] = (byte)(((ushort)command.Data.Length) >> 8);// Data Length MSB
-            resultBytes[3] = (byte)(((ushort)command.Data.Length) & 0xFF); // Data length LSB
+            resultBytes[2] = (byte)(((ushort)cborData.Length) >> 8);// Data Length MSB
+            resultBytes[3] = (byte)(((ushort)cborData.Length) & 0xFF); // Data length LSB
             resultBytes[4] = (byte)(command.GroupId >> 8); // Group Id MSB
             resultBytes[5] = (byte)(command.GroupId & 0xFF); // Group Id LSB
-            resultBytes[6] = command.SequenceNum;// Sequence Num
+            resultBytes[6] = (byte)command.SequenceNum;// Sequence Num (TODO: SequenceNum can be NULL)
             resultBytes[7] = command.CommandId; // Command Id
+
+
+            for(int i = 0; i < cborData.Length; i++)
+            {
+                resultBytes[i + 8] = cborData[i];
+            }
 
             EncodedMcumgrCommand result = new EncodedMcumgrCommand(resultBytes, TransferEncoding.Smp);
             return result;
         }
 
-        public static bool IsEncodedCommandValid(EncodedMcumgrCommand encCommand)
+        public bool IsEncodedCommandValid(EncodedMcumgrCommand encCommand, McumgrCommand command)
         {
             return true;
         }

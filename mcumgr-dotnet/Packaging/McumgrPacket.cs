@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotnet.Packaging
 {
-    internal class McumgrPacket
+    public class McumgrPacket
     {
         public byte[] packet;
 

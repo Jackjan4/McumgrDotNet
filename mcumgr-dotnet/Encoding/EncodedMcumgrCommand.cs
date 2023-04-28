@@ -4,7 +4,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotnet.Encoding
 {
-    internal class EncodedMcumgrCommand
+    public class EncodedMcumgrCommand
     {
         public readonly byte[] EncodedCommand;
         public readonly TransferEncoding encoding;

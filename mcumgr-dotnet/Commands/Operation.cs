@@ -6,6 +6,6 @@ namespace JanRoslan.McumgrDotnet.Commands
 {
     public enum Operation
     {
-        Request = 0, Response = 1, None = 2
+        ReadRequest = 0, ReadResponse = 1, WriteRequest = 2, WriteResponse = 3, None = 4
     }
 }

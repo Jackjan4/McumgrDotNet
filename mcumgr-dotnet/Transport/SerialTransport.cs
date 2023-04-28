@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JanRoslan.McumgrDotNet.Transport
 {
-    internal class SerialTransport : ITransportLayer
+    public class SerialTransport : ITransportLayer
     {
         private SerialPort serialPort;
 

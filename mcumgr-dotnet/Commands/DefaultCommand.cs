@@ -7,19 +7,15 @@ namespace JanRoslan.McumgrDotnet.Commands
 {
     public abstract class DefaultCommand : McumgrCommand
     {
-        public static new ushort GroupId = 0;
+        public static ushort DefaultGroupId = 0;
 
-        public DefaultCommand(byte[] data) : base(Operation.Request, 0, data)
-        {
-
-        }
-
-        internal DefaultCommand( byte[] data, Operation op) : base(op, 0, data)
-        {
-
-        }
-
-        internal DefaultCommand() : base() 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commandId"></param>
+        /// <param name="data"></param>
+        /// <param name="op"></param>
+        internal DefaultCommand(byte commandId, byte[] data, Operation op) : base(DefaultGroupId, commandId, op, 0, data)
         {
 
         }
